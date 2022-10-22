@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import DetailList from "../detail/DetailList";
 
 const ArticleBox = ({ search }) => {
   const token = process.env.REACT_APP_TOKEN;
+  const navigate = useNavigate();
 
   // axios요청으로 불러온 Array을 상태관리를 통해 lists란 state에 넣어준다.
   const [lists, setLists] = useState([]);
@@ -18,6 +21,7 @@ const ArticleBox = ({ search }) => {
     return list.title.toLocaleLowerCase().includes(search.toLocaleLowerCase());
   });
 
+  // 게시글 리스트 조회 요청
   const articleLists = async () => {
     try {
       const headers = {
@@ -48,7 +52,7 @@ const ArticleBox = ({ search }) => {
         observer.unobserve(target.current);
       }
     };
-  }, [target, newLists.length]);
+  }, [newLists.length]);
 
   useEffect(() => {
     setNewLists([...newLists, ...lists]);
@@ -65,7 +69,12 @@ const ArticleBox = ({ search }) => {
         ? newLists &&
           newLists.map((list, i) => {
             return (
-              <div className="listSection" key={i}>
+              <div
+                className="listSection"
+                key={i}
+                onClick={() => {
+                  navigate(`./${list.id}`);
+                }}>
                 <h3>
                   <span>{list.id}.</span> {list.title}{" "}
                 </h3>
@@ -75,7 +84,12 @@ const ArticleBox = ({ search }) => {
           })
         : filterTitle.map((list, i) => (
             /* 검색 했을때 검색된 결과 조회 */
-            <div className="listSection" key={i}>
+            <div
+              className="listSection"
+              key={i}
+              onClick={() => {
+                navigate(`./${list.id}`);
+              }}>
               <h3>
                 <span>{list.id}.</span> {list.title}{" "}
               </h3>

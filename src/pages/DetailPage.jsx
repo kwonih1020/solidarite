@@ -1,7 +1,8 @@
 import React from "react";
+import DetailList from "../components/detail/DetailList";
 
 const DetailPage = () => {
-  return <div>detail</div>;
+  return <DetailList />;
 };
 
 export default DetailPage;
