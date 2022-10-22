@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ArticleBox = ({ search }) => {
+const ArticleBoxB = ({ search }) => {
   const token = process.env.REACT_APP_TOKEN;
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const ArticleBox = ({ search }) => {
         "Content-Type": "application/json",
       };
       const response = await axios.get(
-        `https://recruit-api.yonple.com/recruit/${token}/a-posts?page=${page}`,
+        `https://recruit-api.yonple.com/recruit/${token}/b-posts?page=${page}`,
         { headers: headers }
       );
       setLists(response.data);
@@ -100,7 +100,6 @@ const ArticleBox = ({ search }) => {
 };
 
 const StArticleLists = styled.div`
-  margin-top: 30px;
   border-width: 1px;
   border-radius: 0.375rem;
   --tw-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
@@ -139,4 +138,4 @@ const StObserveContainer = styled.div`
   height: 1px;
 `;
 
-export default React.memo(ArticleBox);
+export default React.memo(ArticleBoxB);

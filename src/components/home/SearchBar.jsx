@@ -1,20 +1,24 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
-import ArticleBox from "./ArticleBox";
+import ArticleBoxA from "./ArticleBoxA";
+// import ArticleBoxB from "./ArticleBoxB";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBar = () => {
+  // icon을 dom에서 지정
   const iconFocus = useRef(null);
+  // icon 클릭시 focus
+  const iconClickFocus = () => {
+    iconFocus.current.focus();
+  };
 
+  // 검색과 동시에 결과 조회
   const [search, setSearch] = useState("");
   const searchOnChange = (e) => {
     setSearch(e.target.value);
-  };
-
-  const iconClickFocus = () => {
-    iconFocus.current.focus();
   };
 
   return (
@@ -35,7 +39,11 @@ const SearchBar = () => {
           />
         </div>
       </StSearchContainer>
-      <ArticleBox search={search} />
+      <StTabContainer>
+        <div className="type typeA">A Posts</div>
+        <div className="type typeB">B Posts</div>
+      </StTabContainer>
+      <ArticleBoxA search={search} />
     </>
   );
 };
@@ -74,6 +82,25 @@ const StSearchContainer = styled.div`
         border-color: blue;
       }
     }
+  }
+`;
+
+const StTabContainer = styled.div`
+  border-bottom-width: 1px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  border-bottom: 1px solid rgba(229, 231, 235);
+  .type {
+    padding: 0.75rem;
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border-radius: 0.25rem;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    appearance: none;
+    font-weight: 500;
+    cursor: pointer;
   }
 `;
 
