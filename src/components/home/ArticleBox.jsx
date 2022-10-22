@@ -15,6 +15,7 @@ const ArticleBox = ({ search }) => {
   const target = useRef(null);
   const [newLists, setNewLists] = useState([]);
   const [page, setPage] = useState(0);
+  console.log(page);
 
   // filter와 includes를 이용해 배열 안에 있는 각 리스트들에 타이틀에 검색을 한 알파벳이나 단어가 포함되어 있는지 판단
   const filterTitle = newLists.filter((list) => {
@@ -42,6 +43,7 @@ const ArticleBox = ({ search }) => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         setPage(page + 1);
+        setNewLists([...newLists, ...lists]);
       }
     });
     if (target.current !== null) {
@@ -52,11 +54,7 @@ const ArticleBox = ({ search }) => {
         observer.unobserve(target.current);
       }
     };
-  }, [newLists.length]);
-
-  useEffect(() => {
-    setNewLists([...newLists, ...lists]);
-  }, [lists]);
+  }, [lists, target, newLists.length]);
 
   useEffect(() => {
     articleLists();
