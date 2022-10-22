@@ -41,7 +41,7 @@ const ArticleBox = ({ search }) => {
   // 무한스크롤
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && lists.length) {
         setPage(page + 1);
         setNewLists([...newLists, ...lists]);
       }
@@ -54,19 +54,35 @@ const ArticleBox = ({ search }) => {
         observer.unobserve(target.current);
       }
     };
-  }, [lists, target, newLists.length]);
+  }, [target, newLists.length, lists]);
 
   useEffect(() => {
     articleLists();
   }, [page]);
 
   return (
-    <StArticleLists>
-      {/* 검색 input에 아무것도 입력이 안됐을때, 모둔 리스트 조회 */}
-      {search === ""
-        ? newLists &&
-          newLists.map((list, i) => {
-            return (
+    <>
+      <StArticleLists>
+        {/* 검색 input에 아무것도 입력이 안됐을때, 모둔 리스트 조회 */}
+        {search === ""
+          ? newLists &&
+            newLists.map((list, i) => {
+              return (
+                <div
+                  className="listSection"
+                  key={i}
+                  onClick={() => {
+                    navigate(`./${list.id}`);
+                  }}>
+                  <h3>
+                    <span>{list.id}.</span> {list.title}{" "}
+                  </h3>
+                  <p>{list.content}</p>
+                </div>
+              );
+            })
+          : filterTitle.map((list, i) => (
+              /* 검색 했을때 검색된 결과 조회 */
               <div
                 className="listSection"
                 key={i}
@@ -78,24 +94,10 @@ const ArticleBox = ({ search }) => {
                 </h3>
                 <p>{list.content}</p>
               </div>
-            );
-          })
-        : filterTitle.map((list, i) => (
-            /* 검색 했을때 검색된 결과 조회 */
-            <div
-              className="listSection"
-              key={i}
-              onClick={() => {
-                navigate(`./${list.id}`);
-              }}>
-              <h3>
-                <span>{list.id}.</span> {list.title}{" "}
-              </h3>
-              <p>{list.content}</p>
-            </div>
-          ))}
+            ))}
+      </StArticleLists>
       <StObserveContainer ref={target} />
-    </StArticleLists>
+    </>
   );
 };
 
@@ -135,4 +137,4 @@ const StObserveContainer = styled.div`
   height: 1px;
 `;
 
-export default ArticleBox;
+export default React.memo(ArticleBox);
