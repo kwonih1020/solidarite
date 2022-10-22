@@ -112,6 +112,7 @@ const StArticleLists = styled.div`
     transition-property: background-color, border-color, color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+    cursor: pointer;
     h3 {
       font-size: 1.125rem;
       span {
@@ -128,6 +129,9 @@ const StArticleLists = styled.div`
       margin-top: 5px;
       line-height: 2;
     }
+  }
+  .listSection:hover {
+    background-color: lightblue;
   }
 `;
 

@@ -76,6 +76,7 @@ const StBackButton = styled.button`
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+  cursor: pointer;
 `;
 
 export default DetailList;
