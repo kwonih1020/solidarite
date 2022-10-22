@@ -36,7 +36,7 @@ const ArticleBox = ({ search }) => {
     }
   };
 
-  // 무한스크롤
+  // 무한스크롤 Intersection Oberserver API 사용
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && lists.length) {
