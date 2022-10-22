@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
 const ArticleBox = ({ search }) => {
   const token = process.env.REACT_APP_TOKEN;
-  console.log(search);
 
   // axios요청으로 불러온 Array을 상태관리를 통해 lists란 state에 넣어준다.
   const [lists, setLists] = useState([]);
-  console.log(lists);
+
+  // 무한스크롤 페이지네이션
+  const target = useRef(null);
+  const [newLists, setNewLists] = useState([]);
+  const [page, setPage] = useState(0);
 
   // filter와 includes를 이용해 배열 안에 있는 각 리스트들에 타이틀에 검색을 한 알파벳이나 단어가 포함되어 있는지 판단
-  const filterTitle = lists.filter((list) => {
+  const filterTitle = newLists.filter((list) => {
     return list.title.toLocaleLowerCase().includes(search.toLocaleLowerCase());
   });
 
@@ -21,7 +24,7 @@ const ArticleBox = ({ search }) => {
         "Content-Type": "application/json",
       };
       const response = await axios.get(
-        `https://recruit-api.yonple.com/recruit/${token}/a-posts?page=0`,
+        `https://recruit-api.yonple.com/recruit/${token}/a-posts?page=${page}`,
         { headers: headers }
       );
       setLists(response.data);
@@ -30,16 +33,37 @@ const ArticleBox = ({ search }) => {
     }
   };
 
+  // 무한스크롤
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setPage(page + 1);
+      }
+    });
+    if (target.current !== null) {
+      observer.observe(target.current);
+    }
+    return () => {
+      if (target.current !== null) {
+        observer.unobserve(target.current);
+      }
+    };
+  }, [target, newLists.length]);
+
+  useEffect(() => {
+    setNewLists([...newLists, ...lists]);
+  }, [lists]);
+
   useEffect(() => {
     articleLists();
-  }, []);
+  }, [page]);
 
   return (
     <StArticleLists>
       {/* 검색 input에 아무것도 입력이 안됐을때, 모둔 리스트 조회 */}
       {search === ""
-        ? lists &&
-          lists.map((list, i) => {
+        ? newLists &&
+          newLists.map((list, i) => {
             return (
               <div className="listSection" key={i}>
                 <h3>
@@ -58,6 +82,7 @@ const ArticleBox = ({ search }) => {
               <p>{list.content}</p>
             </div>
           ))}
+      <StObserveContainer ref={target} />
     </StArticleLists>
   );
 };
@@ -92,6 +117,10 @@ const StArticleLists = styled.div`
       line-height: 2;
     }
   }
+`;
+
+const StObserveContainer = styled.div`
+  height: 1px;
 `;
 
 export default ArticleBox;
