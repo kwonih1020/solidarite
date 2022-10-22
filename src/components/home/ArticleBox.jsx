@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import DetailList from "../detail/DetailList";
 
 const ArticleBox = ({ search }) => {
   const token = process.env.REACT_APP_TOKEN;
@@ -15,7 +14,6 @@ const ArticleBox = ({ search }) => {
   const target = useRef(null);
   const [newLists, setNewLists] = useState([]);
   const [page, setPage] = useState(0);
-  console.log(page);
 
   // filter와 includes를 이용해 배열 안에 있는 각 리스트들에 타이틀에 검색을 한 알파벳이나 단어가 포함되어 있는지 판단
   const filterTitle = newLists.filter((list) => {
