@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import ArticleBox from "./ArticleBox";
+
 const SearchBar = () => {
   const [search, setSearch] = useState("");
   const searchOnChange = (e) => {
@@ -8,14 +10,12 @@ const SearchBar = () => {
   };
 
   return (
-    <StSearchContainer>
-      <input
-        type="text"
-        value={search}
-        onChange={searchOnChange}
-        search={search}
-      />
-    </StSearchContainer>
+    <>
+      <StSearchContainer>
+        <input type="text" value={search} onChange={searchOnChange} />
+      </StSearchContainer>
+      <ArticleBox search={search} />
+    </>
   );
 };
 

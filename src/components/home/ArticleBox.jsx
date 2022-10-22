@@ -6,8 +6,14 @@ const ArticleBox = ({ search }) => {
   const token = process.env.REACT_APP_TOKEN;
   console.log(search);
 
+  // axios요청으로 불러온 Array을 상태관리를 통해 lists란 state에 넣어준다.
   const [lists, setLists] = useState([]);
   console.log(lists);
+
+  // filter와 includes를 이용해 배열 안에 있는 각 리스트들에 타이틀에 검색을 한 알파벳이나 단어가 포함되어 있는지 판단
+  const filterTitle = lists.filter((list) => {
+    return list.title.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+  });
 
   const articleLists = async () => {
     try {
@@ -30,17 +36,28 @@ const ArticleBox = ({ search }) => {
 
   return (
     <StArticleLists>
-      {lists &&
-        lists.map((list, i) => {
-          return (
+      {/* 검색 input에 아무것도 입력이 안됐을때, 모둔 리스트 조회 */}
+      {search === ""
+        ? lists &&
+          lists.map((list, i) => {
+            return (
+              <div className="listSection" key={i}>
+                <h3>
+                  <span>{list.id}.</span> {list.title}{" "}
+                </h3>
+                <p>{list.content}</p>
+              </div>
+            );
+          })
+        : filterTitle.map((list, i) => (
+            /* 검색 했을때 검색된 결과 조회 */
             <div className="listSection" key={i}>
               <h3>
                 <span>{list.id}.</span> {list.title}{" "}
               </h3>
               <p>{list.content}</p>
             </div>
-          );
-        })}
+          ))}
     </StArticleLists>
   );
 };
