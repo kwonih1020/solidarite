@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 import ArticleBoxA from "./ArticleBoxA";
-// import ArticleBoxB from "./ArticleBoxB";
+import ArticleBoxB from "./ArticleBoxB";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +21,15 @@ const SearchBar = () => {
     setSearch(e.target.value);
   };
 
+  // POST A || B 탭UI 상태관리
+  const [types, setTypes] = useState("a");
+  const clickType = (param) => {
+    if (types === param) {
+      setTypes(param);
+    } else {
+      setTypes(param);
+    }
+  };
   return (
     <>
       <StSearchContainer>
@@ -39,11 +48,19 @@ const SearchBar = () => {
           />
         </div>
       </StSearchContainer>
-      {/* <StTabContainer>
-        <div className="type typeA">A Posts</div>
-        <div className="type typeB">B Posts</div>
-      </StTabContainer> */}
-      <ArticleBoxA search={search} />
+      <StTabContainer>
+        <div className="type typeA" onClick={() => clickType("a")}>
+          A Posts
+        </div>
+        <div className="type typeB" onClick={() => clickType("b")}>
+          B Posts
+        </div>
+      </StTabContainer>
+      {types === "a" ? (
+        <ArticleBoxA search={search} />
+      ) : types === "b" ? (
+        <ArticleBoxB search={search} />
+      ) : null}
     </>
   );
 };
@@ -104,6 +121,9 @@ const StTabContainer = styled.div`
     appearance: none;
     font-weight: 500;
     cursor: pointer;
+    &.active {
+      background-color: lightblue;
+    }
   }
 `;
 

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const ArticleBoxB = ({ search }) => {
   const token = process.env.REACT_APP_TOKEN;
   const navigate = useNavigate();
-
   // axios요청으로 불러온 Array을 상태관리를 통해 lists란 state에 넣어준다.
   const [lists, setLists] = useState([]);
 
@@ -27,7 +26,7 @@ const ArticleBoxB = ({ search }) => {
         "Content-Type": "application/json",
       };
       const response = await axios.get(
-        `https://recruit-api.yonple.com/recruit/${token}/b-posts?page=${page}`,
+        `https://recruit-api.yonple.com/recruit/${token}/b-posts?page=${page}&search=${search}`,
         { headers: headers }
       );
       setLists(response.data);
@@ -70,7 +69,7 @@ const ArticleBoxB = ({ search }) => {
                   className="listSection"
                   key={i}
                   onClick={() => {
-                    navigate(`./${list.id}`);
+                    navigate(`./b?id=${list.id}`);
                   }}>
                   <h3>
                     <span>{list.id}.</span> {list.title}{" "}
@@ -85,7 +84,7 @@ const ArticleBoxB = ({ search }) => {
                 className="listSection"
                 key={i}
                 onClick={() => {
-                  navigate(`./${list.id}`);
+                  navigate(`./b?id=${list.id}`);
                 }}>
                 <h3>
                   <span>{list.id}.</span> {list.title}{" "}
