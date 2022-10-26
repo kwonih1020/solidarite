@@ -27,7 +27,7 @@ const ArticleBox = ({ search }) => {
         "Content-Type": "application/json",
       };
       const response = await axios.get(
-        `https://recruit-api.yonple.com/recruit/${token}/a-posts?page=${page}`,
+        `https://recruit-api.yonple.com/recruit/${token}/a-posts?page=${page}&search=${search}`,
         { headers: headers }
       );
       setLists(response.data);

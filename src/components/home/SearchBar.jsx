@@ -39,10 +39,10 @@ const SearchBar = () => {
           />
         </div>
       </StSearchContainer>
-      <StTabContainer>
+      {/* <StTabContainer>
         <div className="type typeA">A Posts</div>
         <div className="type typeB">B Posts</div>
-      </StTabContainer>
+      </StTabContainer> */}
       <ArticleBoxA search={search} />
     </>
   );
