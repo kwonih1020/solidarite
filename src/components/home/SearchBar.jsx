@@ -81,6 +81,9 @@ const StSearchContainer = styled.div`
         outline: none;
         border-color: blue;
       }
+      &:hover {
+        border-color: blue;
+      }
     }
   }
 `;

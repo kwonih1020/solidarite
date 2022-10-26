@@ -70,7 +70,7 @@ const ArticleBox = ({ search }) => {
                   className="listSection"
                   key={i}
                   onClick={() => {
-                    navigate(`./${list.id}`);
+                    navigate(`./a?id=${list.id}`);
                   }}>
                   <h3>
                     <span>{list.id}.</span> {list.title}{" "}
@@ -85,7 +85,7 @@ const ArticleBox = ({ search }) => {
                 className="listSection"
                 key={i}
                 onClick={() => {
-                  navigate(`./${list.id}`);
+                  navigate(`./a?id=${list.id}`);
                 }}>
                 <h3>
                   <span>{list.id}.</span> {list.title}{" "}

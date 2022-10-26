@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
 const DetailList = () => {
   const token = process.env.REACT_APP_TOKEN;
 
-  const { id } = useParams();
+  // url에서 아이디 값 추출, 서버 요청에 사용될 예정
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  // console.log(id);
   const navigate = useNavigate();
 
   // 하나의 게시글의 상태를 관리하는 state
