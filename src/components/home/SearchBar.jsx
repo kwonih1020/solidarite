@@ -23,6 +23,7 @@ const SearchBar = () => {
 
   // POST A || B 탭UI 상태관리
   const [types, setTypes] = useState("a");
+
   const clickType = (param) => {
     if (types === param) {
       setTypes(param);
@@ -30,6 +31,7 @@ const SearchBar = () => {
       setTypes(param);
     }
   };
+
   return (
     <>
       <StSearchContainer>
