@@ -30,8 +30,8 @@ const ArticleBox = ({ search }) => {
         `https://recruit-api.yonple.com/recruit/${token}/a-posts?page=${page}&search=${search}`,
         { headers: headers }
       );
-      // console.log(response);
       setLists(response.data);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
